@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format:fix": "npx prettier ./**/*.{ts,tsx} --write"
   },
   "keywords": [],
   "author": "",
