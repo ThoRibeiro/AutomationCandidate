@@ -1,0 +1,20 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format:fix": "npx prettier ./**/*.{ts,tsx} --write",
+    "headless": "playwright test --reporter=line --workers=1",
+    "debug": "playwright test --reporter=line --debug --workers=1",
+    "headed": "playwright test --reporter=html --headed --workers=1",
+    "title": "playwright test --reporter=line --debug -g"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.43.0",
+    "@types/node": "^20.12.5"
+  }
+}
