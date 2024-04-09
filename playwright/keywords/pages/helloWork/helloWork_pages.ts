@@ -12,17 +12,19 @@ export class HelloWorkPages {
     this.helloWorkPageLocators = new HelloWorkPageLocators(page);
   }
 
-  async refuseCookies(): Promise<void> {
-    await this.helloWorkPageLocators.button_rejectCookies().click();
-  }
   async goToHelloWork(): Promise<void> {
     await this.page.goto("https://www.hellowork.com/fr-fr/");
   }
 
+  async refuseCookies(): Promise<void> {
+    await this.helloWorkPageLocators.button_rejectCookies().click();
+  }
+
   async goToLogin(): Promise<void> {
-    await this.helloWorkPageLocators
-      .button_clickOnLogin()
-      .waitFor({ state: "visible" });
+    await this.page.waitForTimeout(4000)
+    if(await this.helloWorkPageLocators.popin_loginInGoogle().isVisible()){
+      await this.helloWorkPageLocators.button_closePopinGoogle().click();
+    }
     await this.helloWorkPageLocators.button_clickOnLogin().click();
     await this.helloWorkPageLocators.button_clickLogin().click();
   }
@@ -32,6 +34,7 @@ export class HelloWorkPages {
       .waitFor({ state: "visible" });
     await this.helloWorkPageLocators.input_email().fill(account.email);
     await this.helloWorkPageLocators.input_password().fill(account.password);
+    await this.helloWorkPageLocators.button_submitForm().click()
   }
 
   async searchJob(): Promise<void> {}

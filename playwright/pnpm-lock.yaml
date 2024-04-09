@@ -6,8 +6,10 @@ importers:
     specifiers:
       '@playwright/test': ^1.43.0
       '@types/node': ^20.12.5
+      dotenv: ^16.4.5
       googleapis: ^134.0.0
     dependencies:
+      dotenv: 16.4.5
       googleapis: 134.0.0
     devDependencies:
       '@playwright/test': 1.43.0
@@ -38,6 +40,14 @@ importers:
       '@common/data': link:../../common/data
       '@keywords/locators': link:../locators
       '@keywords/pages': 'link:'
+
+  tests/helloWork:
+    specifiers:
+      '@common/data': workspace:^1.0.0
+      '@keywords/pages': workspace:^1.0.0
+    dependencies:
+      '@common/data': link:../../common/data
+      '@keywords/pages': link:../../keywords/pages
 
 packages:
 
@@ -106,6 +116,11 @@ packages:
       es-define-property: 1.0.0
       es-errors: 1.3.0
       gopd: 1.0.1
+    dev: false
+
+  /dotenv/16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
     dev: false
 
   /ecdsa-sig-formatter/1.0.11:

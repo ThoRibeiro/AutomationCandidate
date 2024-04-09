@@ -1,0 +1,17 @@
+{
+  "name": "@tests/helloWork",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "debug": "playwright test --debug"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@common/data": "workspace:^1.0.0",
+    "@keywords/pages": "workspace:^1.0.0"
+  }
+}
