@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 import { HelloWorkPages } from "@keywords/pages/helloWork/helloWork_pages";
-import {accountsInHelloWork} from "@common/data/accounts";
-import {config} from "dotenv"
+import { accountsInHelloWork } from "@common/data/accounts";
+import { config } from "dotenv";
 
-config()
+config();
 test.describe
   .serial("Candidate in hello work and report in google sheet spreadsheet", () => {
   test("Candidate in offer", async ({ page }) => {

@@ -21,8 +21,8 @@ export class HelloWorkPages {
   }
 
   async goToLogin(): Promise<void> {
-    await this.page.waitForTimeout(4000)
-    if(await this.helloWorkPageLocators.popin_loginInGoogle().isVisible()){
+    await this.page.waitForTimeout(4000);
+    if (await this.helloWorkPageLocators.popin_loginInGoogle().isVisible()) {
       await this.helloWorkPageLocators.button_closePopinGoogle().click();
     }
     await this.helloWorkPageLocators.button_clickOnLogin().click();
@@ -34,7 +34,7 @@ export class HelloWorkPages {
       .waitFor({ state: "visible" });
     await this.helloWorkPageLocators.input_email().fill(account.email);
     await this.helloWorkPageLocators.input_password().fill(account.password);
-    await this.helloWorkPageLocators.button_submitForm().click()
+    await this.helloWorkPageLocators.button_submitForm().click();
   }
 
   async searchJob(): Promise<void> {}

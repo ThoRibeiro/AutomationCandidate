@@ -5,4 +5,3 @@ export const accountsInHelloWork: Account = {
   email: process.env.EMAILHELLOWORK,
   password: process.env.PASSWORDHELLOWORK,
 };
-

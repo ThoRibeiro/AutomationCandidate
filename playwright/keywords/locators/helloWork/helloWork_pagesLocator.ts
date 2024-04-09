@@ -16,6 +16,8 @@ export default class HelloWorkPageLocators {
   button_rejectCookies = () =>
     this.page.locator('//button[contains(text(), "Continuer sans accepter")]');
   popin_loginInGoogle = () => this.page.locator("//div[@class='tw-p-4']");
-  button_closePopinGoogle = () => this.page.locator("//button[@aria-label='Fermer la fenêtre']");
-  button_submitForm = () => this.page.locator("(//button[@class='profile-button'])[2]");
+  button_closePopinGoogle = () =>
+    this.page.locator("//button[@aria-label='Fermer la fenêtre']");
+  button_submitForm = () =>
+    this.page.locator("(//button[@class='profile-button'])[2]");
 }
