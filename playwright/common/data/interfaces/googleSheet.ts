@@ -1,4 +1,5 @@
 export interface TableGoogleSheet {
-  index: number;
-  email: string;
+  date: number;
+  offerTitle: string;
+  company: string;
 }

@@ -1,42 +1,48 @@
 import { google } from "googleapis";
-import { TableGoogleSheet } from "@common/data/interfaces/googleSheet";
+import { JWT } from "google-auth-library";
 
-export class WriteInGoogleSheet {
-  private googleAuth: {
-    clientEmail: string;
-    privateKey: string;
-    spreadsheetId: string;
-  };
+export async function writeToGoogleSheet(dataToWrite) {
 
-  constructor(googleAuth: {
-    clientEmail: string;
-    privateKey: string;
-    spreadsheetId: string;
-  }) {
-    this.googleAuth = googleAuth;
-  }
+  const credentials = require("../../../credentials/json/service-accounts-key.json");
 
-  async writeInGoogleSheet(value: TableGoogleSheet) {
-    const googleAuth = {
-      clientEmail: process.env.clientEmail,
-      privateKey: process.env.clientKey,
-      spreadsheetId: process.env.spreadsheetId,
-    };
+  const client = new JWT({
+    email: credentials.client_email,
+    key: credentials.private_key,
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
 
-    const auth = new google.auth.JWT({
-      email: this.googleAuth.clientEmail,
-      key: this.googleAuth.privateKey,
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-    });
-    const sheets = google.sheets({ version: "v4", auth });
+  const sheets = google.sheets({ version: "v4", auth: client });
+  const spreadsheetId = "1I8OHVe88v8Y7_vP4rVGn0t9i9kw8F3nMH5A8ZuTuguQ";
 
-    await sheets.spreadsheets.values.update({
-      spreadsheetId: this.googleAuth.spreadsheetId,
-      range: "A" + value.index,
-      valueInputOption: "RAW",
+  const data = dataToWrite.map(value => [value.date, value.offerTitle, value.company]);
+
+  try {
+    const sheetName = `Sheet_${Date.now()}`;
+
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: spreadsheetId,
       requestBody: {
-        values: [[value.email]],
+        requests: [{
+          addSheet: {
+            properties: {
+              title: sheetName,
+            },
+          },
+        }],
       },
     });
+
+    const response = await sheets.spreadsheets.values.update({
+      spreadsheetId: spreadsheetId,
+      range: `${sheetName}!A1`,
+      valueInputOption: "USER_ENTERED",
+      requestBody: {
+        values: data,
+      },
+    });
+
+    console.log(`Cells updated.`);
+  } catch (error) {
+    console.error('Error writing to Google Sheets:', error);
   }
 }

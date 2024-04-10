@@ -13,6 +13,7 @@ dist-ssr
 *.local
 .env
 test-results
+credentials/
 
 
 # Editor directories and files
