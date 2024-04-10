@@ -9,7 +9,6 @@ export class HelloWorkPages {
   page: Page;
   helloWorkPageLocators: HelloWorkPageLocators;
 
-
   constructor(page: Page) {
     this.page = page;
     this.helloWorkPageLocators = new HelloWorkPageLocators(page);
@@ -41,44 +40,54 @@ export class HelloWorkPages {
   }
 
   async searchJob(): Promise<void> {
-    await this.helloWorkPageLocators.input_searchJob().fill("Administrateur réseaux et systèmes")
-    await this.helloWorkPageLocators.input_searchTown().fill("Lille 59000")
-    await this.helloWorkPageLocators.button_submitSearch().click()
+    await this.helloWorkPageLocators
+      .input_searchJob()
+      .fill("Administrateur réseaux et systèmes");
+    await this.helloWorkPageLocators.input_searchTown().fill("Lille 59000");
+    await this.helloWorkPageLocators.button_submitSearch().click();
   }
 
   async filterSelect(): Promise<void> {
-    await this.helloWorkPageLocators.list_selectAlternance().click()
-    await this.helloWorkPageLocators.list_clickInCompanyType().click()
-    await this.helloWorkPageLocators.list_clickFilterCompany().click()
+    await this.helloWorkPageLocators.list_selectAlternance().click();
+    await this.helloWorkPageLocators.list_clickInCompanyType().click();
+    await this.helloWorkPageLocators.list_clickFilterCompany().click();
   }
 
-  async selectOffer(): Promise<Array<TableGoogleSheet>>{
-    let tab : Array<TableGoogleSheet> = [];
-    let countOfOffers : number;
-    let getOfferTitle : string;
+  async selectOffer(): Promise<Array<TableGoogleSheet>> {
+    let tab: Array<TableGoogleSheet> = [];
+    let countOfOffers: number;
+    let getOfferTitle: string;
     let getCompany: string;
     let i = 0;
 
     countOfOffers = await this.helloWorkPageLocators.span_countOffer().count();
 
     do {
-      await this.helloWorkPageLocators.span_clickOnOffer(i).waitFor({ state:"visible" });
+      await this.helloWorkPageLocators
+        .span_clickOnOffer(i)
+        .waitFor({ state: "visible" });
       await this.helloWorkPageLocators.span_clickOnOffer(i).click();
-      if(await this.helloWorkPageLocators.span_candidateInRecruiterSite().isVisible()){
+      if (
+        await this.helloWorkPageLocators
+          .span_candidateInRecruiterSite()
+          .isVisible()
+      ) {
         await this.page.goBack();
-      }
-      else {
+      } else {
         // await this.helloWorkPageLocators.link_clickOnCandidate().click();
-        getOfferTitle = await this.helloWorkPageLocators.span_getOfferTitle().innerText();
-        getCompany = await this.helloWorkPageLocators.span_getCompany().innerText();
+        getOfferTitle = await this.helloWorkPageLocators
+          .span_getOfferTitle()
+          .innerText();
+        getCompany = await this.helloWorkPageLocators
+          .span_getCompany()
+          .innerText();
         console.log(`${getOfferTitle}, ${getCompany}`);
         // tab.push({index: i, date: Date.now(), offerTitle: getOfferTitle, company: getCompany});
       }
       // part google sheet call
 
       i++;
-
-    } while(i != countOfOffers)
+    } while (i != countOfOffers);
 
     return tab;
   }

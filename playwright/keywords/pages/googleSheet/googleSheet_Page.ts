@@ -2,7 +2,6 @@ import { google } from "googleapis";
 import { JWT } from "google-auth-library";
 
 export async function writeToGoogleSheet(dataToWrite) {
-
   const credentials = require("../../../credentials/json/service-accounts-key.json");
 
   const client = new JWT({
@@ -14,7 +13,11 @@ export async function writeToGoogleSheet(dataToWrite) {
   const sheets = google.sheets({ version: "v4", auth: client });
   const spreadsheetId = "1I8OHVe88v8Y7_vP4rVGn0t9i9kw8F3nMH5A8ZuTuguQ";
 
-  const data = dataToWrite.map(value => [value.date, value.offerTitle, value.company]);
+  const data = dataToWrite.map((value) => [
+    value.date,
+    value.offerTitle,
+    value.company,
+  ]);
 
   try {
     const sheetName = `Sheet_${Date.now()}`;
@@ -22,13 +25,15 @@ export async function writeToGoogleSheet(dataToWrite) {
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId: spreadsheetId,
       requestBody: {
-        requests: [{
-          addSheet: {
-            properties: {
-              title: sheetName,
+        requests: [
+          {
+            addSheet: {
+              properties: {
+                title: sheetName,
+              },
             },
           },
-        }],
+        ],
       },
     });
 
@@ -43,6 +48,6 @@ export async function writeToGoogleSheet(dataToWrite) {
 
     console.log(`Cells updated.`);
   } catch (error) {
-    console.error('Error writing to Google Sheets:', error);
+    console.error("Error writing to Google Sheets:", error);
   }
 }
